@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm'
+import { IsEmail } from 'class-validator';
+import { Entity, Column, PrimaryGeneratedColumn, AfterInsert} from 'typeorm'
 
 @Entity()
 export class User {
@@ -11,4 +12,10 @@ export class User {
 
     @Column()
     password: string;
+
+
+    @AfterInsert()
+    logAfterInsert() {
+
+    }
 }
