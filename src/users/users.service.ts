@@ -16,11 +16,13 @@ export class UsersService {
     return this.repo.findOneBy({ id });
   }
 
-  find(email: string) {
-    const user = this.repo.find({ where: { email } });
+  findByEmail(email: string) {
+    const user = this.repo.findOneBy({ email });
     if (!user) {
       throw new NotFoundException('User not found');
     }
+
+    return user;
   }
 
   findAll() {
