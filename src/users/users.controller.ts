@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  Session,
   UseInterceptors,
 } from '@nestjs/common';
 import {
@@ -27,18 +28,45 @@ export class UsersController {
     private user: UsersService,
     private authService: AuthService,
   ) {}
+
+  @Get('color/:color')
+  createColor(@Param('color') color: string, @Session() session: any) {
+    session.color = color;
+  }
+
+  @Get('color')
+  getColors(@Session() session: any) {
+    return session.color;
+  }
+
   @Post('signup')
   @Serialize(UserDTO)
-  createUser(@Body() body: CreateUserDTO) {
+  async createUser(@Body() body: CreateUserDTO, @Session() session: any) {
     const { email, password } = body;
-    return this.authService.signUp(email, password);
+    const user = await this.authService.signUp(email, password);
+    session.useId = await user.id;
+    return user;
   }
 
   @Post('login')
   @Serialize(UserDTO)
-  signIn(@Body() body: LoginUserDTO) {
+  async signIn(@Body() body: LoginUserDTO, @Session() session: any) {
     const { email, password } = body;
-    return this.authService.signIn(email, password);
+    const user = await this.authService.signIn(email, password);
+    session.userId = user.id;
+    return user;
+  }
+
+  @Get('whoami')
+  @Serialize(UserDTO)
+  whoAmI(@Session() session: any) {
+    return this.user.findOne(session?.userId);
+  }
+
+  @Get('logout')
+  logout(@Session() session: any) {
+    session.userId = null;
+    return 'You are logged out';
   }
 
   @Serialize(UserDTO)
