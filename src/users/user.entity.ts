@@ -1,21 +1,20 @@
+import { Exclude } from 'class-transformer';
 import { IsEmail } from 'class-validator';
-import { Entity, Column, PrimaryGeneratedColumn, AfterInsert} from 'typeorm'
+
+import { Entity, Column, PrimaryGeneratedColumn, AfterInsert } from 'typeorm';
 
 @Entity()
 export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Column()
+  email: string;
 
-    @Column()
-    email: string;
+  @Exclude()
+  @Column()
+  password: string;
 
-    @Column()
-    password: string;
-
-
-    @AfterInsert()
-    logAfterInsert() {
-
-    }
+  @AfterInsert()
+  logAfterInsert() {}
 }
