@@ -22,7 +22,6 @@ export class InterceptorClass implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
-    console.log(' I am running before the handler');
     return next.handle().pipe(
       map((data: any) => {
         // Run something before response sent to end

@@ -12,19 +12,19 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { AuthGaurd } from 'src/guards/auth.guard';
+import { AuthGaurd } from '../guards/auth.guard';
 import {
   InterceptorClass,
   Serialize,
-} from 'src/intercepters/serialize.interceptor';
-import { AuthService } from 'src/users/auth.service';
-import { CurrentUser } from 'src/users/decoraters/current-user.decorator';
-import { CreateUserDTO } from 'src/users/dtos/create-user.dto';
-import { LoginUserDTO } from 'src/users/dtos/login-user.dto';
-import { UpdateUserDTO } from 'src/users/dtos/update-user.dto';
-import { UserDTO } from 'src/users/dtos/user.dto';
-import { CurrentUserIntercepter } from 'src/users/interceptors/current-user.intercepter';
-import { UsersService } from 'src/users/users.service';
+} from '../intercepters/serialize.interceptor';
+import { AuthService } from './auth.service';
+import { CurrentUser } from './decoraters/current-user.decorator';
+import { CreateUserDTO } from './dtos/create-user.dto';
+import { LoginUserDTO } from './dtos/login-user.dto';
+import { UpdateUserDTO } from './dtos/update-user.dto';
+import { UserDTO } from './dtos/user.dto';
+import { CurrentUserIntercepter } from './interceptors/current-user.intercepter';
+import { UsersService } from './users.service';
 
 @Controller('users')
 @UseInterceptors(CurrentUserIntercepter)
