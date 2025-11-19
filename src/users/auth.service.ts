@@ -15,8 +15,7 @@ export class AuthService {
   async signUp(email: string, password: string) {
     // check if the user exists
     const existUser = await this.userService.findByEmail(email);
-
-    if (existUser) {
+    if (existUser?.email) {
       throw new BadRequestException('User already exists');
     }
     // hash password
@@ -33,11 +32,12 @@ export class AuthService {
 
   async signIn(email: string, password: string) {
     const user = await this.userService.findByEmail(email);
-    if (!user) {
+    if (!user?.email) {
       throw new NotFoundException('User does not exists');
+      return;
     }
 
-    const [salt, salted_password] = user.password.split('.');
+    const [salt, salted_password] = user?.password.split('.');
     const hashPassword = (await scrypt(password, salt, 32)) as Buffer;
 
     if (hashPassword.toString('hex') != salted_password) {
