@@ -25,6 +25,7 @@ import { UpdateUserDTO } from './dtos/update-user.dto';
 import { UserDTO } from './dtos/user.dto';
 import { CurrentUserIntercepter } from './interceptors/current-user.intercepter';
 import { UsersService } from './users.service';
+import { User } from 'src/users/user.entity';
 
 @Controller('users')
 @UseInterceptors(CurrentUserIntercepter)
@@ -65,8 +66,7 @@ export class UsersController {
   @Get('whoami')
   @Serialize(UserDTO)
   @UseGuards(AuthGaurd)
-  whoAmI(@CurrentUser() user: string) {
-    console.log(user, 'yser');
+  whoAmI(@CurrentUser() user: User) {
     return user;
   }
 

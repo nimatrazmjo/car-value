@@ -1,7 +1,14 @@
 import { Exclude } from 'class-transformer';
 import { IsEmail } from 'class-validator';
+import { Report } from '../reports/report.entity';
 
-import { Entity, Column, PrimaryGeneratedColumn, AfterInsert } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  AfterInsert,
+  OneToMany,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -16,4 +23,7 @@ export class User {
 
   @AfterInsert()
   logAfterInsert() {}
+
+  @OneToMany(() => Report, (report) => report.user)
+  reports: Report[];
 }
