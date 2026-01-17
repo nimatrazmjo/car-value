@@ -1,5 +1,3 @@
-import { Exclude } from 'class-transformer';
-import { IsEmail } from 'class-validator';
 import { Report } from '../reports/report.entity';
 
 import {
@@ -18,6 +16,9 @@ export class User {
   @Column()
   email: string;
 
+  @Column({ default: true })
+  admin: boolean;
+
   @Column()
   password: string;
 
@@ -26,4 +27,7 @@ export class User {
 
   @OneToMany(() => Report, (report) => report.user)
   reports: Report[];
+
+  @OneToMany(() => Report, (report) => report.approvedBy)
+  approvedReports: Report[];
 }

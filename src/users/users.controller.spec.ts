@@ -109,7 +109,7 @@ describe('UsersController', () => {
       session,
     );
 
-    expect(user!.id!).toBeDefined();
+    expect(user!.id).toBeDefined();
     expect(session.userId).toEqual(user!.id);
   });
 
