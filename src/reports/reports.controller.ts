@@ -5,6 +5,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -18,6 +19,7 @@ import { Serialize } from '../intercepters/serialize.interceptor';
 import { ReportDTO } from '../reports/dtos/report.dto';
 import { AdminGuard } from '../guards/admin.guard';
 import { ApprovedReportDTO } from './dtos/approved-report.dto';
+import { GetEstimateDTO } from './dtos/get-estimate.dto';
 
 @Controller('reports')
 export class ReportsController {
@@ -42,10 +44,8 @@ export class ReportsController {
     return this.reportService.create(body, user);
   }
 
-  @Get('')
-  @UseGuards(AuthGaurd)
-  @Serialize(ReportDTO)
-  findAll(@CurrentUser() user: User) {
-    return this.reportService.findAll(user);
+  @Get('/')
+  getEstimate(@Query() query: GetEstimateDTO) {
+    return this.reportService.getEstimage(query);
   }
 }
