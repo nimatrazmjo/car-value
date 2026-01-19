@@ -20,12 +20,6 @@ async function bootstrap() {
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, documentFactory);
-
-  app.use(
-    cookieSession({
-      keys: ['asdfdsaf'],
-    }),
-  );
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
